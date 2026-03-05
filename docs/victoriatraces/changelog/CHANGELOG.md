@@ -12,6 +12,8 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 
 ## tip
 
+* FEATURE: [dashboards/single-node](https://grafana.com/grafana/dashboards/24136), [dashboards/cluster](https://grafana.com/grafana/dashboards/24134): add clickable source code links to the `Logging rate` panel in `Overview`. Users can use it to navigate directly to the source code location that generated those logs, making debugging and code exploration easier. See [#106](https://github.com/VictoriaMetrics/VictoriaTraces/pull/106).
+
 ## [v0.8.0](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.8.0)
 
 Released at 2026-03-02
@@ -24,7 +26,6 @@ Released at 2026-03-02
 * FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtselect, vtstorage in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): (experimental) add support for [Tempo datasource APIs](https://grafana.com/docs/tempo/latest/api_docs/). This starts with support for the basic auto-completion `/tags`, search `/search`, and `/v2/traces/*` APIs.
   TraceQL metrics and pipelines are not yet available in this release.
 * FEATURE: [logstorage](https://docs.victoriametrics.com/victorialogs/): upgrade VictoriaLogs dependency from [v1.43.1 to v1.47.0](https://github.com/VictoriaMetrics/VictoriaLogs/compare/v1.43.1...v1.47.0).
-
 
 ## [v0.7.1](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.7.1)
 
