@@ -14,6 +14,7 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 
 * SECURITY: upgrade Go builder from Go1.26.0 to Go1.26.2. See the list of issues addressed in [Go1.26.1](https://github.com/golang/go/issues?q=milestone%3AGo1.26.1+label%3ACherryPickApproved) and [Go1.26.2](https://github.com/golang/go/issues?q=milestone%3AGo1.26.2+label%3ACherryPickApproved).
 
+* FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtstorage in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): allow generating service graph relation by database client span. The client span contains `db.system.name` attribute will generate a `service.name:db.system.name` (example: `account_service:mysql`) relation. It can be disabled by setting `-servicegraph.databaseTaskLimit=0`. Thank @wsx864321 for [the pull request #117](https://github.com/VictoriaMetrics/VictoriaTraces/pull/117).
 * FEATURE: [dashboards/single-node](https://grafana.com/grafana/dashboards/24136), [dashboards/cluster](https://grafana.com/grafana/dashboards/24134): add clickable source code links to the `Logging rate` panel in `Overview`. Users can use it to navigate directly to the source code location that generated those logs, making debugging and code exploration easier. See [#106](https://github.com/VictoriaMetrics/VictoriaTraces/pull/106).
 
 ## [v0.8.0](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.8.0)
