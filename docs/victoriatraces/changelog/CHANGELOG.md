@@ -12,6 +12,8 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 
 ## tip
 
+## [v0.8.1](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.8.1)
+
 * SECURITY: upgrade Go builder from Go1.26.0 to Go1.26.2. See the list of issues addressed in [Go1.26.1](https://github.com/golang/go/issues?q=milestone%3AGo1.26.1+label%3ACherryPickApproved) and [Go1.26.2](https://github.com/golang/go/issues?q=milestone%3AGo1.26.2+label%3ACherryPickApproved).
 
 * FEATURE: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtstorage in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): allow generating service graph relation by database client span. The client span contains `db.system.name` attribute will generate a `service.name:db.system.name` (example: `account_service:mysql`) relation. It can be disabled by setting `-servicegraph.databaseTaskLimit=0`. Thank @wsx864321 for [the pull request #117](https://github.com/VictoriaMetrics/VictoriaTraces/pull/117).
