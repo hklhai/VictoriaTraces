@@ -12,8 +12,6 @@ import (
 
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/flagutil"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/logger"
-	"github.com/VictoriaMetrics/VictoriaMetrics/lib/netutil"
-
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/internalinsert"
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/opentelemetry"
 	"github.com/VictoriaMetrics/VictoriaTraces/lib/grpc"
@@ -120,16 +118,10 @@ func initGRPCServer() {
 		if *otlpGRPCTlsCertFile == "" {
 			logger.Fatalf("-otlpGRPC.tlsCertFile is required when -otlpGRPC.tls is true.")
 		}
-		tlsConfig, err = netutil.GetServerTLSConfig(*otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites)
+		tlsConfig, err = opentelemetry.NewGRPCTLSConfig(*otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites)
 		if err != nil {
 			logger.Fatalf("cannot load TLS cert from -tlsCertFile=%q, -tlsKeyFile=%q, -tlsMinVersion=%q, -tlsCipherSuites=%q: %s", *otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites, err)
 		}
-
-		// considering stability, this is enabled only for OTLP gRPC TLS.
-		// Enable HTTP/2 support for TLS listeners via ALPN.
-		// See https://datatracker.ietf.org/doc/html/rfc7540#section-3.3
-		// See https://github.com/VictoriaMetrics/VictoriaTraces/issues/108
-		tlsConfig.NextProtos = []string{"h2"}
 	}
 
 	logger.Infof("starting OTLP gPRC server at %q...", *otlpGRPCListenAddr)

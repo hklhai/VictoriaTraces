@@ -12,6 +12,8 @@ The following `tip` changes can be tested by building VictoriaTraces components 
 
 ## tip
 
+* BUGFIX: [Single-node VictoriaTraces](https://docs.victoriametrics.com/victoriatraces/) and vtinsert in [VictoriaTraces cluster](https://docs.victoriametrics.com/victoriatraces/cluster/): fix gRPC over TLS connection failure when using grpc-go v1.67+. The TLS listener was missing `h2` in ALPN negotiation, causing the error `credentials: cannot check peer: missing selected ALPN property`. [RFC 7540 §3.3](https://datatracker.ietf.org/doc/html/rfc7540#section-3.3) requires HTTP/2 over TLS to be negotiated via ALPN using the `h2` identifier. See [#108](https://github.com/VictoriaMetrics/VictoriaTraces/issues/108) and [#136](https://github.com/VictoriaMetrics/VictoriaTraces/pull/136).
+
 ## [v0.8.1](https://github.com/VictoriaMetrics/VictoriaTraces/releases/tag/v0.8.1)
 
 Released at 2026-04-14
