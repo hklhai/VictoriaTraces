@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/insertutil"
-
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/flagutil"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/logger"
+
+	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/insertutil"
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/internalinsert"
 	"github.com/VictoriaMetrics/VictoriaTraces/app/vtinsert/opentelemetry"
 	"github.com/VictoriaMetrics/VictoriaTraces/lib/grpc"
@@ -118,7 +118,7 @@ func initGRPCServer() {
 		if *otlpGRPCTlsCertFile == "" {
 			logger.Fatalf("-otlpGRPC.tlsCertFile is required when -otlpGRPC.tls is true.")
 		}
-		tlsConfig, err = opentelemetry.NewGRPCTLSConfig(*otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites)
+		tlsConfig, err = http2server.NewTLSConfig(*otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites)
 		if err != nil {
 			logger.Fatalf("cannot load TLS cert from -tlsCertFile=%q, -tlsKeyFile=%q, -tlsMinVersion=%q, -tlsCipherSuites=%q: %s", *otlpGRPCTlsCertFile, *otlpGRPCTlsKeyFile, *otlpGRPCTlsMinVersion, *otlpGRPCTlsCipherSuites, err)
 		}

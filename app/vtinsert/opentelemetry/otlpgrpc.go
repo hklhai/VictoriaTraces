@@ -1,7 +1,6 @@
 package opentelemetry
 
 import (
-	"crypto/tls"
 	"encoding/binary"
 	"fmt"
 	"net/http"
@@ -9,7 +8,6 @@ import (
 
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/bytesutil"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/logger"
-	"github.com/VictoriaMetrics/VictoriaMetrics/lib/netutil"
 	"github.com/VictoriaMetrics/VictoriaMetrics/lib/protoparser/protoparserutil"
 	"github.com/VictoriaMetrics/metrics"
 
@@ -167,21 +165,4 @@ func pushGRPCProtobufRequest(data []byte, lmp insertutil.LogMessageProcessor) er
 		return fmt.Errorf("cannot decode LogsData request from %d bytes: %w", len(data), err)
 	}
 	return nil
-}
-
-// NewGRPCTLSConfig builds a TLS config for the OTLP gRPC listener.
-// NextProtos is set to ["h2"] to enable HTTP/2 ALPN negotiation.
-// This is scoped exclusively to gRPC TLS to avoid unintended HTTP/2
-func NewGRPCTLSConfig(certFile, keyFile, minVersion string, cipherSuites []string) (*tls.Config, error) {
-	cfg, err := netutil.GetServerTLSConfig(certFile, keyFile, minVersion, cipherSuites)
-	if err != nil {
-		return nil, err
-	}
-
-	// considering stability, this is enabled only for OTLP gRPC TLS.
-	// Enable HTTP/2 support for TLS listeners via ALPN.
-	// See https://datatracker.ietf.org/doc/html/rfc7540#section-3.3
-	// See https://github.com/VictoriaMetrics/VictoriaTraces/issues/108
-	cfg.NextProtos = []string{"h2"}
-	return cfg, nil
 }
